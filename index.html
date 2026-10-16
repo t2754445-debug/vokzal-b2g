@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Журнал исполнения</title>
+<meta name="description" content="Новый продукт для аэропортов и вокзалов у компании со слаботочной компетенцией: доступность с доказанной исправностью и санузел под контролем. Мировые примеры, методы поиска, экономика и план.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Журнал исполнения: новый продукт для аэропортов и вокзалов">
+<meta property="og:description" content="Кнопки вызова для маломобильных с доказанной исправностью и санузлы под контролем датчиков. 10 зарубежных историй, 5 методов поиска, экономика и план на год.">
+<meta property="og:image" content="https://t2754445-debug.github.io/vokzal-b2g/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://t2754445-debug.github.io/vokzal-b2g/">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=PT+Sans+Narrow:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eef1f2; --ink:#15191c; --mute:#5b666c; --line:#cfd6d9; --card:#ffffff;
+  --signal:#d52b1e; --board:#1f2629; --board-line:#323b3f; --flap:#f3b13a; --flap-ink:#1f2629;
+  --red:#c23a2b; --amber:#a86c12; --green:#2c7a4f; --tint:#e2e8ea;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#13181a; --ink:#e4eaec; --mute:#97a3a8; --line:#2d363a; --card:#1c2326;
+  --signal:#ff5a4a; --board:#0d1113; --board-line:#263034; --flap:#f3b13a; --flap-ink:#13181a;
+  --red:#ff7a6a; --amber:#e9a640; --green:#5cc48a; --tint:#1b2225;
+}}
+:root[data-theme="dark"]{
+  --paper:#13181a; --ink:#e4eaec; --mute:#97a3a8; --line:#2d363a; --card:#1c2326;
+  --signal:#ff5a4a; --board:#0d1113; --board-line:#263034; --flap:#f3b13a; --flap-ink:#13181a;
+  --red:#ff7a6a; --amber:#e9a640; --green:#5cc48a; --tint:#1b2225;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+a{color:inherit;text-decoration-color:var(--mute);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--signal)}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"PT Sans Narrow",sans-serif;font-weight:700;line-height:1.06;margin:0}
+h1{font-size:clamp(42px,5.4vw,66px);letter-spacing:-.01em}
+h2{font-size:clamp(30px,3.8vw,44px);margin:0 0 18px}
+h3{font-size:23px;margin:0 0 8px}
+p{margin:0 0 14px}
+.prose{max-width:68ch}
+.mute{color:var(--mute)}
+.src{font-size:14px;color:var(--mute)}
+.src a{color:var(--mute)}
+section{padding:72px 0 8px}
+section+section{border-top:1px solid var(--line);margin-top:56px}
+.est{font-size:13px;font-weight:600;color:var(--amber);white-space:nowrap}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:44px;align-items:start;padding:56px 0 24px}
+.hero .lead{font-size:20px;line-height:1.5;margin:22px 0 18px;max-width:34em}
+.hero .meta{font-size:15px;color:var(--mute)}
+.log{background:var(--board);color:#e9eef0;border-radius:18px;padding:14px 0 12px;overflow:hidden}
+.log-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 18px 10px;border-bottom:1px solid var(--board-line)}
+.log-head b{font:700 20px "PT Sans Narrow",sans-serif;color:#fff}
+.log-head span{font:600 18px "IBM Plex Mono",monospace;color:var(--flap);font-variant-numeric:tabular-nums}
+.rows{min-height:330px}
+.row{display:grid;grid-template-columns:74px minmax(0,1fr);gap:12px;padding:10px 18px;border-bottom:1px solid var(--board-line);animation:in .35s ease-out}
+@keyframes in{from{background:#f3b13a22}to{background:transparent}}
+.row time{font:600 16px "IBM Plex Mono",monospace;color:var(--flap);background:#2b3438;border-radius:4px;text-align:center;padding:3px 0;height:fit-content;font-variant-numeric:tabular-nums}
+.row .what b{display:block;font:700 17px/1.25 "PT Sans Narrow",sans-serif;color:#fff}
+.row .what small{display:block;font-size:13.5px;color:#a9b8bd;margin-top:1px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.step{font-size:12.5px;font-weight:600;border-radius:999px;padding:2px 9px;background:#2b3438;color:#7f9096}
+.step.on{background:#2c7a4f33;color:#7ddca4}
+.step.alarm{background:#d52b1e33;color:#ff9a8c}
+.log-ctrls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 18px 2px}
+.lbtn{font:600 14px/1.25 "IBM Plex Sans",sans-serif;border-radius:10px;padding:9px 10px;border:1px solid #3d474b;background:#2b3438;color:#fff;cursor:pointer;text-align:left}
+.lbtn:hover{border-color:var(--flap)}
+.log-note{font-size:13.5px;color:#a9b8bd;padding:10px 18px 0;margin:0}
+
+/* excluded */
+.excl{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.excl div{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card)}
+.excl s{font:700 21px "PT Sans Narrow",sans-serif;text-decoration-color:var(--signal);text-decoration-thickness:3px;display:block;margin-bottom:6px}
+.excl p{margin:0;font-size:15.5px;color:var(--mute)}
+
+/* decision */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+.prod{border-radius:18px;padding:22px 24px;border:2px solid var(--ink);background:var(--card)}
+.prod .ord{font:700 16px "PT Sans Narrow",sans-serif;color:var(--signal)}
+.prod h3{font-size:30px;margin:4px 0 10px}
+.prod ul{margin:10px 0 0;padding-left:20px;font-size:15.5px}
+.prod li{margin:4px 0}
+
+/* funnel */
+.funnel{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:26px 0 8px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.funnel div{padding:16px 18px;border-left:1px solid var(--line)}
+.funnel div:first-child{border-left:0}
+.funnel b{display:block;font:700 44px/1 "PT Sans Narrow",sans-serif}
+.funnel span{font-size:14.5px;color:var(--mute)}
+.funnel div:last-child b{color:var(--signal)}
+.methods{display:grid;grid-template-columns:1fr 1fr;gap:22px 40px;margin-top:26px}
+.methods div{border-left:3px solid var(--ink);padding-left:16px}
+.methods h3{font-size:21px}
+.methods p{font-size:15.5px;margin:0}
+
+/* product sections */
+.layers{list-style:none;margin:20px 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.layers li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.layers b{display:block;font:700 18px "PT Sans Narrow",sans-serif;margin-bottom:4px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
+.facts div{border-top:4px solid var(--ink);padding-top:10px}
+.facts b{display:block;font:700 34px/1.05 "PT Sans Narrow",sans-serif}
+.facts span{font-size:14.5px;color:var(--mute)}
+.warn{background:var(--tint);border-radius:14px;padding:16px 20px;margin:18px 0;max-width:80ch}
+.warn h3{font-size:20px}
+.warn ul{margin:6px 0 0;padding-left:20px;font-size:15.5px}
+.warn li{margin:4px 0}
+
+/* tables */
+.tbl{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:640px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{font:700 15px "PT Sans Narrow",sans-serif;color:var(--mute);background:var(--tint)}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:600;background:var(--tint)}
+
+/* stories */
+.stories{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+.story{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:20px 22px;display:flex;flex-direction:column}
+.story .where{font-size:14.5px;color:var(--mute);margin-bottom:6px}
+.story p{font-size:15.5px}
+.story blockquote{margin:4px 0 12px;padding:2px 0 2px 14px;border-left:3px solid var(--signal);font-style:italic;font-size:15.5px}
+.story blockquote cite{display:block;font-style:normal;font-size:14px;color:var(--mute);margin-top:4px}
+.story .ru{margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.story .ru p{margin:6px 0 0}
+.ru-tag{display:inline-block;font-size:13.5px;font-weight:600;border-radius:999px;padding:3px 10px}
+.ru-no{background:var(--signal);color:#fff}.ru-pilot{background:var(--flap);color:var(--flap-ink)}
+
+/* why */
+.why{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 40px;margin-top:22px}
+.why div{border-left:3px solid var(--ink);padding-left:16px}
+.why h3{font-size:21px}
+.why p{font-size:15.5px;margin:0}
+
+/* killed */
+.killed td:first-child{font-weight:600;white-space:nowrap}
+.killed td:first-child s{text-decoration-color:var(--signal);text-decoration-thickness:2px}
+
+/* plan */
+.plan{list-style:none;margin:22px 0 0;padding:0}
+.plan li{display:grid;grid-template-columns:120px minmax(0,1fr) minmax(0,1fr);gap:20px;padding:16px 0;border-top:1px solid var(--line);font-size:15.5px}
+.plan li .m{font:700 21px "PT Sans Narrow",sans-serif}
+.plan li .r{color:var(--mute)}
+.plan li .r b{color:var(--ink)}
+.stop{background:var(--board);color:#e9eef0;border-radius:16px;padding:22px 24px;margin:26px 0}
+.stop h3{color:var(--flap)}
+.stop p{margin:0;max-width:72ch}
+.decision{font-size:20px;line-height:1.5;max-width:40em}
+.foot{padding:56px 0 72px;color:var(--mute);font-size:15px}
+.files a{font-weight:600}
+.story,.prod,.plan li,.why div,.stop,.warn,.methods div,tr{break-inside:avoid}
+
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr;gap:28px}
+  .two,.stories,.why,.methods{grid-template-columns:1fr}
+  .excl{grid-template-columns:1fr}
+  .layers{grid-template-columns:1fr 1fr}
+  .facts{grid-template-columns:1fr}
+  .funnel{grid-template-columns:1fr 1fr}
+  .funnel div:nth-child(3){border-left:0}
+  .funnel div:nth-child(n+3){border-top:1px solid var(--line)}
+  .plan li{grid-template-columns:1fr;gap:4px}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  body{font-size:16px}
+  section{padding-top:52px}
+  .log-ctrls{grid-template-columns:1fr}
+  .row{grid-template-columns:62px minmax(0,1fr);padding:10px 14px}
+  .row time{font-size:14px}
+  .layers{grid-template-columns:1fr}
+  .killed td:first-child{white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <h1>Часы фиксировали время. Журнал фиксирует, что сделано вовремя</h1>
+    <p class="lead">Новый продукт для аэропортов и вокзалов у компании, которая ставит там часы, умеет слаботочку и имеет допуск на объекты. Два продукта на одной сети датчиков. Оба продают оператору доказательство: кнопка работала, сотрудник пришёл, туалет убран, за курением следят.</p>
+    <p class="meta">Исследование переделано с нуля 16 октября 2026. Цифры со ссылкой подтверждены источником, пометка <span class="est">оценка</span> означает наш расчёт.</p>
+  </div>
+  <figure class="log" style="margin:0" aria-label="Пример журнала исполнения">
+    <div class="log-head"><b>Журнал исполнения · вокзал</b><span id="now">--:--:--</span></div>
+    <div class="rows" id="rows" aria-live="polite"></div>
+    <div class="log-ctrls">
+      <button class="lbtn" data-ev="mgn">Вызов маломобильного пассажира</button>
+      <button class="lbtn" data-ev="vape">Курят в кабине 3</button>
+      <button class="lbtn" data-ev="smell">Запах в санузле Ж</button>
+    </div>
+    <p class="log-note">Нажмите кнопку: событие пройдёт путь «событие → принято → на месте». Время сжато, минута за секунду. Такой журнал оператор показывает прокурору и подрядчику.</p>
+  </figure>
+</header>
+
+<section id="ubrali" style="border-top:0;margin-top:0;padding-top:36px">
+  <h2>Что убрали по вашим словам</h2>
+  <div class="excl">
+    <div><s>Устойчивое время</s><p>Вопрос уже решён. Синхронизацию, ГЛОНАСС и защиту от подмены больше не трогаем.</p></div>
+    <div><s>Оповещение</s><p>Закрыто, за этим следят. Убрали и всё рядом: часы как точки тревоги, трансляцию объявлений в слуховые аппараты.</p></div>
+    <div><s>Замена часов</s><p>Старые часы работают, менять никто не будет. Новый продукт не трогает часы вообще.</p></div>
+  </div>
+  <p class="src" style="margin-top:12px">Ещё исключены чужие рынки с сильными игроками: видеонаблюдение и «Безопасный город», биометрия, табло рейсов, реклама, Wi-Fi, зарядки, умные опоры.</p>
+</section>
+
+<section id="reshenie">
+  <h2>Решение: два продукта на одной сети</h2>
+  <div class="prose">
+    <p>Российский оператор вокзала или аэропорта покупает не аналитику, а <b>доказательство исполнения</b>. Ему нужно показать прокурору, что кнопка работала. Показать заказчику, что уборщик пришёл. Показать охране, что за курением следят. Деньги появляются там, где есть проверка, предписание или спор с подрядчиком. Это место никто не занимает: ни клининг, ни лифтовые организации, ни разработчики программ без допуска на объект.</p>
+  </div>
+  <div class="two">
+    <article class="prod">
+      <div class="ord">Первым · деньги за 3–6 месяцев</div>
+      <h3>Доступность с доказанной исправностью</h3>
+      <p>Кнопки вызова помощи для маломобильных пассажиров, которые каждый день сообщают «я исправна». Приложение сотрудника и журнал «вызов → принят → на месте». Отчёт для проверки.</p>
+      <ul>
+        <li>Приказ Минтранса № 368 с 1 сентября 2026 требует кнопки у входов в аэровокзал и их <b>рабочее состояние</b></li>
+        <li>Только 29,5% вокзалов соответствовали требованиям доступности в 2023</li>
+        <li>Дирекция вокзалов уже покупает оснащение залов для маломобильных лотами по 9–34 млн ₽, конкурсы только для МСП</li>
+      </ul>
+    </article>
+    <article class="prod">
+      <div class="ord">Вторым · пилот на тех же объектах</div>
+      <h3>Санузел под контролем</h3>
+      <p>Датчики без камер: счётчик посетителей, запах, расходники, детектор вейпа и дыма, радар падения в кабине для маломобильных. Уборка по факту вместо графика и объективный отчёт по контракту на уборку.</p>
+      <ul>
+        <li>Уборка: крупнейший регулярный контракт объекта, до 253 млн ₽ у аэропорта, 42,4 млн ₽ у региональной дирекции вокзалов</li>
+        <li>Штраф юрлицу 60–90 тыс. ₽ за неконтроль запрета курения (ч. 3 ст. 6.25 КоАП)</li>
+        <li>Tork, лидер в 5 из 10 крупнейших аэропортов мира, ушёл из России вместе с Essity</li>
+      </ul>
+    </article>
+  </div>
+  <p class="src" style="margin-top:14px">Почему такой порядок: под доступность уже есть приказ, прокурор и готовые лоты, она приносит деньги и ставит на объекты шлюзы. Санузел запускается на той же сети, и для заказчика его цена сводится к датчикам и подписке.</p>
+</section>
+
+<section id="metody">
+  <h2>Как искали: пять нетрадиционных методов</h2>
+  <div class="prose"><p>Вместо вопроса «какую технологию продать» шли от денег и наказаний оператора, переносили решения из других отраслей и сталкивали технологии между собой. Потом попытались убить каждую гипотезу.</p></div>
+  <div class="funnel">
+    <div><b>62</b><span>внедрения в аэропортах (29) и на вокзалах (33) мира, 2022–2026</span></div>
+    <div><b>20</b><span>решений из больниц, школ, стадионов, домов престарелых для переноса</span></div>
+    <div><b>6</b><span>гипотез прошли фильтр ваших исключений</span></div>
+    <div><b>2</b><span>выжили после «вскрытия провала»</span></div>
+  </div>
+  <div class="methods">
+    <div><h3>Инверсия: за что оператор платит и за что его наказывают</h3><p>Нашли штраф юрлицу 60–90 тыс. ₽ за курение, прокурорские представления по доступности, приказ № 368 и главное: самая крупная регулярная статья объекта это уборка. Метод же показал неприятное: штрафы мелкие, а реальный рычаг даёт представление прокурора со сроком.</p></div>
+    <div><h3>Перенос из других отраслей</h3><p>Вейп-детекторы из школ (в США HALO, в России AntiVape уже стоит в лицеях Калининграда и вузах Петербурга). Радар падения из ухода за пожилыми. Учёт колясок из больниц. И отрицательный пример: датчики мочи в лифтах Бостона дали 58% верных срабатываний, от них отказались.</p></div>
+    <div><h3>Столкновение технологий</h3><p>Скрещивали попарно то, что подешевело к 2025: радар 60 ГГц, ToF-счётчики, датчики аммиака, LoRaWAN, электронную бумагу, акустику. Самая доказанная пара: запах + занятость + приложение уборщика. Самая новая: радар + санузел, Fujitsu вывела такой продукт только в июне 2025.</p></div>
+    <div><h3>Противоречие по ТРИЗ</h3><p>Оператору надо знать, что происходит в туалете и у входа для маломобильных, но камеры туда нельзя, а людей не хватает. Решение: датчики, которые физически не видят лиц, и вызов сотрудника по событию вместо дежурства. Отсюда ядро обоих продуктов.</p></div>
+    <div><h3>Вскрытие провала и вопросы YC</h3><p>Красная команда представила, что в 2028 каждая гипотеза провалилась, и назвала по три причины. Потом вопросы из офисных часов Y Combinator: кому это нужно отчаянно сейчас, что делают вместо этого, какой самый узкий клин, продастся ли за полгода. Четыре из шести погибли.</p></div>
+  </div>
+</section>
+
+<section id="dostupnost">
+  <h2>Доступность с доказанной исправностью</h2>
+  <div class="prose">
+    <p><b>Продаём не кнопку, а доказательство.</b> Антивандальные кнопки вызова на входах и в санкомнатах, каждая раз в сутки сообщает, что исправна. Табличка Брайлем. Приложение сотрудника: принял вызов, подтвердил приход меткой у точки. Журнал «вызов → принят → на месте» и отчёт за любой период в виде, удобном для прокурора. Опции на том же журнале: индукционные петли с контролем исправности и экран статуса подъёмных платформ через сухой контакт, с согласия лифтовой организации.</p>
+  </div>
+  <div class="facts">
+    <div><b>с 01.09.2026</b><span>приказ Минтранса № 368: кнопки у входов (п. 6), рабочее состояние (п. 7), Брайль (п. 8). <a class="src" href="http://publication.pravo.gov.ru/file/pdf?eoNumber=0001202601150014">pravo.gov.ru</a></span></div>
+    <div><b>29,5%</b><span>вокзалов соответствовали требованиям доступности в 2023. <a class="src" href="https://sr2023.rzd.ru/ru/social-aspect/customer-relations/passenger-complex-clients">РЖД</a></span></div>
+    <div><b>Мурманск, Камчатка</b><span>новый терминал без кнопки вызова и Брайля, представление прокурора; на Камчатке иск. <a class="src" href="https://b-port.com/news/351882">B-port</a>, <a class="src" href="https://kamchatka.aif.ru/incidents/prokuratura-vyyavila-ryad-narusheniy-v-mezhdunarodnom-aeroportu-kamchatki">АиФ</a></span></div>
+  </div>
+  <div class="prose"><p><b>Кому продавать первым:</b> директору аэровокзального комплекса или начальнику вокзала, у которого на руках представление прокурора. Это единственная должность из шести гипотез, которой продукт нужен прямо сейчас и со сроком.</p>
+  <p><b>Канал на вокзалах уже есть.</b> Дирекция железнодорожных вокзалов регулярно покупает комплексное оснащение залов ожидания для маломобильных пассажиров, все конкурсы только для малого и среднего бизнеса. По поиску rostender таких лотов 151.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Лот Дирекции железнодорожных вокзалов</th><th>Цена, ₽</th><th>Срок</th><th>Источник</th></tr></thead>
+    <tbody>
+      <tr><td>Комплексное оснащение вокзалов: Пенза, Петербург, Ульяновск, Улан-Удэ, Тюмень. ЕИС 32616261411</td><td class="num">28 454 903</td><td class="num">11.08.2026</td><td><a href="https://rostender.info/tender/94115199">rostender</a></td></tr>
+      <tr><td>То же, Ставропольский край</td><td class="num">17 983 199</td><td class="num">29.05.2026</td><td><a href="https://rostender.info/region/stavropolskij-kraj/92654085-tender-vypolnenie-rabot-po-kompleksnomu-osnashcheniyu-vokzalnyh-kompleksov-direkcii-jeleznodorojnyh-vokzalov-filiala-oao-rjd-dlya-organizacii">rostender</a></td></tr>
+      <tr><td>Оснащение залов ожидания для маломобильных, Московская дирекция</td><td class="num">21 345 288</td><td class="num">04.03.2026</td><td><a href="https://rostender.info/tender/30589913376">rostender</a></td></tr>
+      <tr><td>То же, Курск</td><td class="num">9 313 121</td><td class="num">24.02.2026</td><td><a href="https://rostender.info/tender/30591689450">rostender</a></td></tr>
+      <tr><td>Текущий ремонт и оснащение залов для маломобильных</td><td class="num">33 683 715</td><td class="num">31.12.2025</td><td><a href="https://rostender.info/tender/30591658842">rostender</a></td></tr>
+      <tr><td>То же, Кировская область</td><td class="num">33 683 716</td><td class="num">30.12.2025</td><td><a href="https://rostender.info/tender/30589426300">rostender</a></td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">Номер ЕИС подтверждён у первого лота, у остальных указаны номера rostender. Состав работ в ТЗ не видели: документация закрыта.</p>
+  <div class="warn">
+    <h3>Главный риск: кнопка за 5 тыс. ₽</h3>
+    <ul>
+      <li>Рынок кнопок товарный: 787 лотов «система вызова помощи маломобильных», кнопка K2 «Тифлоцентра» стоит 4 797 ₽.</li>
+      <li>Приказ № 368 в прочитанных пунктах 1–22 журнал не требует. Журнал продаётся как защита на следующей проверке, отстраиваемся доказуемостью, а не железом.</li>
+      <li>Лифты и подъёмники в ядро не входят: по постановлению правительства № 743 диспетчерский контроль там уже обязателен, его ведёт лифтовая организация.</li>
+    </ul>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Средний вокзал: 10 кнопок, 3 подъёмные платформы через сухой контакт</th><th>Сумма, ₽</th></tr></thead>
+    <tbody>
+      <tr><td>10 антивандальных кнопок «Тифлоцентр» K1 по 14 814 ₽, приёмник и 2 ретранслятора</td><td class="num">189 349</td></tr>
+      <tr><td>4 модуля «Вега СИ-11», шлюз «Вега БС-2.2» из реестра российской электроники, антенна, питание</td><td class="num">97 758</td></tr>
+      <tr><td>Монтаж кнопок с табличками, наладка, интеграция <span class="est">оценка</span></td><td class="num">130 000–190 000</td></tr>
+      <tr class="total"><td>Вложения заказчика на вокзал <span class="est">оценка</span></td><td class="num">0,32–0,48 млн</td></tr>
+      <tr><td>Подписка на журнал и отчёт: на вокзал или пакетом на региональную дирекцию <span class="est">оценка</span></td><td class="num">5 000–15 000 в мес.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">Цены «Тифлоцентра» и «Вега-Абсолют» по прайсам производителей, без НДС. Подписка занижена сознательно: годовой контракт на обслуживание лифтов и платформ вокзала Оренбург стоит 451,5 тыс. ₽, дороже малый вокзал не заплатит. В лоте дирекции на 9–34 млн ₽ подсистема на 3–6 вокзалов составит порядка 1–3 млн ₽ <span class="est">оценка</span>.</p>
+</section>
+
+<section id="sanuzel">
+  <h2>Санузел под контролем</h2>
+  <div class="prose"><p>Пять слоёв датчиков, все ставятся слаботочным монтажом. Всё уходит через шлюз в приложение уборщика и супервайзера, заказчик получает отчёт по контракту на уборку. Уборка назначается по числу посещений, по остатку расходников, по запаху или по кнопке оценки.</p></div>
+  <ul class="layers">
+    <li><b>Счётчик на входе</b>Сколько людей прошло с последней уборки</li>
+    <li><b>Запах NH3 и H2S</b>Пора убирать или включить вентиляцию</li>
+    <li><b>Расходники</b>Где кончается мыло, бумага, полотенца</li>
+    <li><b>Вейп и дым</b>Курение там, где камер быть не может</li>
+    <li><b>Радар 60 ГГц</b>Падение или слишком долгое пребывание в кабине для маломобильных</li>
+  </ul>
+  <div class="facts">
+    <div><b>до 253 млн ₽</b><span>лот на уборку аэровокзала (Приморье, Южно-Сахалинск); Новокузнецк 72,5 млн ₽. <a class="src" href="https://rostender.info/tender/30592311836">rostender</a></span></div>
+    <div><b>42,4 млн ₽</b><span>уборка 13 малых вокзалов Приволжской дирекции, конкурс для МСП, ЕИС 32616449586. <a class="src" href="https://rostender.info/tender/95542364">rostender</a></span></div>
+    <div><b>60–90 тыс. ₽</b><span>штраф юрлицу за неконтроль запрета курения, ч. 3 ст. 6.25 КоАП. <a class="src" href="https://www.zakonrf.info/koap/6.25/">КоАП</a></span></div>
+  </div>
+  <div class="prose">
+    <p><b>Где здесь новинка.</b> Датчики запаха и счётчики в мировых аэропортах уже норма. Новое здесь: радар и вейп-детектор. Fujitsu вывела коммерческий радарный продукт для доступных туалетов в Японии только 16 июня 2025, радар выбрали потому, что камеры в туалете недопустимы. Вейп-детекторы пришли из американских школ, в России их уже ставят в школах, а петербургская AntiVape сама называет «поезда» сферой применения. На вокзалах и в аэропортах этого пока никто не сделал. <span class="src"><a href="https://www.fujitsu.com/global/about/resources/news/press-releases/2025/0616-01.html">Fujitsu</a>, <a href="https://news.mail.ru/society/63057339/">Mail.ru</a>, <a href="https://antivape.ru">AntiVape</a></span></p>
+    <p><b>Почему заплатят.</b> Деньги лежат не в ИТ-бюджете, а в контракте на уборку. Подписка на 10 санузловых блоков стоит около 1,44 млн ₽ в год, это примерно 2% контракта Новокузнецка <span class="est">оценка</span>. Такую долю продать можно, если она экономит выходы уборщиков или даёт основание штрафовать подрядчика. Шереметьево раньше теряло баллы в рейтинге качества ACI из-за запаха табака в туалетах после закрытия курилок. <span class="src"><a href="https://www.m24.ru/articles/75193">M24</a></span></p>
+    <p><b>Как попасть в закупку.</b> Отдельного предмета «мониторинг санузлов» на транспорте нет. Путь: пилот, затем требование электронного контроля уборки санузлов в ТЗ следующего лота на уборку. Второй плательщик: клининговый подрядчик, но только когда требование уже в ТЗ: сам он прозрачность против себя не купит.</p>
+  </div>
+  <div class="warn">
+    <h3>Слабые места</h3>
+    <ul>
+      <li>Закона, который обязывает ставить датчики в санузлах, нет. Детектор вейпа не выполняет норму за владельца, а документирует, что контроль ведётся.</li>
+      <li>Мировая модель Tork и TRAX зарабатывает на расходниках. У слаботочной компании расходников нет, подписка идёт сверх контракта на уборку.</li>
+      <li>Радар, который видит падение, создаёт обязанность реагировать. Вейп-детекторы брать без микрофона, иначе упрёмся в приватность.</li>
+      <li>Эффект в мире подтверждают в основном сами производители. Независимых замеров нет.</li>
+    </ul>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Санузловой блок: 10 кабин и 1 кабина для маломобильных, входы М и Ж</th><th>Сумма, ₽</th></tr></thead>
+    <tbody>
+      <tr><td>2 ToF-счётчика Milesight VS133 (462,79 € у немецкого дистрибьютора) <span class="est">оценка в рублях</span></td><td class="num">130 000</td></tr>
+      <tr><td>2 датчика запаха, 6 датчиков дозаторов, 11 датчиков бумаги <span class="est">оценка</span></td><td class="num">218 000</td></tr>
+      <tr><td>2 детектора вейпа и дыма, радар 60 ГГц <span class="est">оценка</span></td><td class="num">175 000</td></tr>
+      <tr><td>Кнопка вызова, кнопки оценки, шлюз «Вега БС-1.2» (56 350 ₽), кабель</td><td class="num">115 084</td></tr>
+      <tr class="total"><td>Оборудование, полная версия <span class="est">оценка</span></td><td class="num">≈ 638 000</td></tr>
+      <tr><td>Облегчённая версия: инфракрасные счётчики, один детектор вейпа <span class="est">оценка</span></td><td class="num">250 000–300 000</td></tr>
+      <tr><td>Монтаж и наладка с надбавкой за режимный объект <span class="est">оценка</span></td><td class="num">150 000–250 000</td></tr>
+      <tr class="total"><td>Вложения на блок <span class="est">оценка</span></td><td class="num">0,4–0,9 млн</td></tr>
+      <tr><td>Подписка: платформа, приложение, отчёт, замена батарей <span class="est">оценка</span></td><td class="num">8 000–15 000 в мес.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="src">Маржа на подписке 65–80%, на оборудовании в конкурсе 15–25%, на монтаже своей бригадой 30–50% <span class="est">оценка</span>. Объект из 10 блоков за три года: около 5–7 млн ₽ вложений и 4,3 млн ₽ подписки. Цены Milesight пересчитаны из евро по формуле «× 140 ₽», нужно заменить на предложение российского дистрибьютора.</p>
+</section>
+
+<section id="set">
+  <h2>Одна сеть, два продукта</h2>
+  <div class="prose">
+    <p>Оба продукта сидят на одной инфраструктуре: шлюз LoRaWAN на объект, сервер, приложение сотрудника с журналом «событие → принято → исполнено» и отчёт заказчику. Кнопка маломобильного пассажира, радар в санкомнате и кнопка «грязно» у выхода из туалета отличаются только типом события. Так строили Схипхол (своя сеть LoRaWAN, первым приложением стала оценка туалетов), SNCF (500 шлюзов, тысячи датчиков) и Deutsche Bahn. Потом на ту же сеть дёшево добавляются датчики протечки за 798 ₽ и всё, что попросит заказчик. <span class="src"><a href="https://news.schiphol.com/schiphol-rolls-out-its-own-network-for-internet-of-things-applications/">Schiphol</a>, <a href="https://www.actility.com/sncf-blog/">Actility</a>, <a href="https://iotvega.com/product/dp2">Вега</a></span></p>
+    <p>Для госзаказчика важно происхождение. Шлюз «Вега БС-2.2» внесён в реестр российской радиоэлектронной продукции, платформа Rightech IoT Cloud есть в реестре российского ПО под № 14080. Специализированных российских датчиков запаха, счётчиков и радаров нет, поэтому схема такая: российские шлюз и сервер, китайские датчики, со временем свой корпус на китайском радарном модуле и подача в реестр. <span class="src"><a href="https://rossma.ru/?p=1471">rossma</a>, <a href="https://soware.ru/products/rightech-iot-cloud">Soware</a></span></p>
+  </div>
+</section>
+
+<section id="zarubezhom">
+  <h2>Что сработало за рубежом и чего у нас ещё нет</h2>
+  <div class="prose"><p>Десять историй под оба продукта. Пометка «по словам компании» значит, что цифру подтверждает только производитель.</p></div>
+  <div class="stories">
+    <article class="story">
+      <div class="where">Амстердам, Схипхол, с 2019</div>
+      <h3>600 тысяч оценок туалетов в месяц вместо 1 500 за два месяца</h3>
+      <p>Аэропорт построил свою сеть LoRaWAN по залам, пирсам и перрону. Первым приложением стали более 500 кнопок оценки туалетов. По этим данным решают, какие санузлы ремонтировать первыми.</p>
+      <div class="ru"><span class="ru-tag ru-no">В России нет</span><p>Своей сети датчиков с оценкой туалетов в российских аэропортах не нашли. Урок: сначала сеть, потом приложения на ней.</p></div>
+      <p class="src"><a href="https://schiphol.nl/en/innovation/blog/a-years-worth-of-feedback-on-our-toilets">Schiphol</a>, <a href="https://www.rcrwireless.com/20191219/internet-of-things/amsterdam-airport-deploys-private-lorawan-network-for-facilities-management">RCR Wireless</a></p>
+    </article>
+    <article class="story">
+      <div class="where">Хьюстон и Атланта, TRAX, 2021–2022</div>
+      <h3>Уборщиков отправляли не туда</h3>
+      <p>Счётчики в 73 туалетах аэропортов Хьюстона показали, что уборщики ходили в малопосещаемые санузлы. Заявленная экономия на расходниках $300 тыс. за полгода, по словам компании. Атланта в 2022 добавила ещё 66 туалетов.</p>
+      <div class="ru"><span class="ru-tag ru-no">В России нет</span><p>Уборка по графику и бумажный чек-лист на двери. Датчики дают заказчику цифры для спора с подрядчиком.</p></div>
+      <p class="src"><a href="https://traxinsights.com/houston-airport-systems-case-study/">TRAX</a>, <a href="https://traxinsights.com/atlanta-airlines-terminal-company-at-hartsfield-jackson-atlanta-international-airport/">TRAX ATL</a></p>
+    </article>
+    <article class="story">
+      <div class="where">Сингапур, Чанги</div>
+      <h3>Плохая оценка за секунду уходит супервайзеру</h3>
+      <p>У выхода из туалета экран с пятибалльной шкалой. При низкой оценке пассажир выбирает причину, и сигнал сразу приходит на телефон супервайзера уборки.</p>
+      <div class="ru"><span class="ru-tag ru-pilot">Есть частично</span><p>Кнопки «оцените» встречаются, но без связки с вызовом уборщика и отчётом по контракту.</p></div>
+      <p class="src"><a href="https://www.changiairport.com/corporate/media-centre/changijourneys/the-changi-experience/tech-ed-up-washrooms.html">Changi</a></p>
+    </article>
+    <article class="story">
+      <div class="where">Индия, международный аэропорт, 2024–2025</div>
+      <h3>117 санузлов собрал интегратор, основанный в 2022</h3>
+      <p>Около 3 000 серийных датчиков Milesight и 30 шлюзов LoRaWAN, своя платформа AeroWise. Расходники пополняют по факту, а не обходами. Продукт собрал молодой интегратор из готовых датчиков, а не крупный производитель.</p>
+      <div class="ru"><span class="ru-tag ru-no">В России нет</span><p>Ровно та траектория, которая нужна часовой компании: из монтажника в продуктовую компанию на серийных датчиках.</p></div>
+      <p class="src"><a href="https://www.milesight.com/iot/success-stories/iot-smart-washroom-india-airport">Milesight</a></p>
+    </article>
+    <article class="story">
+      <div class="where">Япония, Fujitsu, 2024–2025</div>
+      <h3>Радар вместо камеры в доступном туалете</h3>
+      <p>Пилот в торговом центре Aeon Mall Ota следил за падениями и слишком долгим пребыванием. С 16 июня 2025 это коммерческий продукт. Радар 60 ГГц строит облако точек, а не изображение человека.</p>
+      <div class="ru"><span class="ru-tag ru-no">В России нет</span><p>В общественных туалетах вокзалов и аэропортов такого нет нигде в мире. Дополняет кнопку вызова там, где человек упал и нажать не может.</p></div>
+      <p class="src"><a href="https://www.fujitsu.com/global/about/resources/news/press-releases/2025/0616-01.html">Fujitsu</a></p>
+    </article>
+    <article class="story">
+      <div class="where">Сингапур и Великобритания, метро и вокзалы</div>
+      <h3>Аммиак вызывает уборщика</h3>
+      <p>Оператор метро SMRT ставит в туалеты станций датчики аммиака, уборщики выходят по нагрузке. Британская LNER поставила датчики запаха в санузлы 18 вокзалов.</p>
+      <div class="ru"><span class="ru-tag ru-no">В России нет</span><p>На российских вокзалах датчиков запаха не нашли, а жалобы на запах в туалетах есть даже у Шереметьево.</p></div>
+      <p class="src"><a href="https://www.smrt.com.sg/Announcements/articleid/1303">SMRT</a>, <a href="https://www.milesight.com/iot/success-stories/iot-green-railway-station-management">Milesight, LNER</a></p>
+    </article>
+    <article class="story">
+      <div class="where">Нью-Йорк, аудит метро, 2024</div>
+      <h3>1 198 экстренных вызовов остались без ответа</h3>
+      <blockquote>Из 140 698 звонков с колонн помощи за полгода половина хулиганские, а 1 198 экстренных никто не принял.<cite>Генеральный инспектор MTA, ноябрь 2024</cite></blockquote>
+      <div class="ru"><span class="ru-tag ru-pilot">Довод для нас</span><p>Кнопка без журнала и регламента не работает. Это готовый аргумент для директора вокзала.</p></div>
+      <p class="src"><a href="https://mtaig.ny.gov/Reports/2024-11%20NYC%20Transit%20Can%20be%20More%20Responsive%20to%20Help%20Point%20Calls%20by%20Improving%20Operations.pdf">MTA OIG</a></p>
+    </article>
+    <article class="story">
+      <div class="where">Уэльс, Transport for Wales, 2025–2026</div>
+      <h3>£20,8 тыс. за умную точку помощи</h3>
+      <p>Колонны помощи на 48 станциях за £1 млн. Подгоняет регулятор ORR, который проверяет операторов повторно.</p>
+      <blockquote>Мы хотим, чтобы пассажиры чувствовали себя в безопасности, уверенно и на связи.<cite>Телери Эванс, Transport for Wales</cite></blockquote>
+      <div class="ru"><span class="ru-tag ru-pilot">Ориентир цены</span><p>Наш вариант в разы дешевле: кнопка с журналом, а не колонна с видеосвязью.</p></div>
+      <p class="src"><a href="https://news.tfw.wales/news/48-railway-stations-across-wales-set-to-receive-new-help-points">TfW</a>, <a href="https://www.orr.gov.uk/search-news/progress-made-improving-help-points-stations-more-work-required-says-rail-regulator">ORR</a></p>
+    </article>
+    <article class="story">
+      <div class="where">Дубай, аэропорт DXB, сентябрь 2025</div>
+      <h3>520 индукционных петель за один проект</h3>
+      <p>Петли для слуховых аппаратов на регистрации, паспортном контроле, у выходов и справочных всех трёх терминалов.</p>
+      <div class="ru"><span class="ru-tag ru-pilot">Есть частично</span><p>Петли есть во Внукове, Толмачёве, Череповце, но контроля их исправности не нашли. Это опция к журналу доступности.</p></div>
+      <p class="src"><a href="https://www.khaleejtimes.com/uae/dubai-dxb-new-hearing-loops">Khaleej Times</a>, <a href="https://tiflocentre.ru/news/aeroport-novosibirsk.php">Тифлоцентр</a></p>
+    </article>
+    <article class="story">
+      <div class="where">Великобритания, Network Rail, январь 2026</div>
+      <h3>Старый мониторинг назван «ненадёжным и дорогим»</h3>
+      <p>Оператор начал консультацию с рынком о едином удалённом мониторинге 1 379 лифтов за £1,5 млн, около £1 100 на лифт.</p>
+      <div class="ru"><span class="ru-tag ru-pilot">Урок</span><p>Журнал исправности надо проектировать так, чтобы через 10 лет его не пришлось выбрасывать: открытые форматы, российская платформа.</p></div>
+      <p class="src"><a href="https://www.find-tender.service.gov.uk/Notice/002683-2026">Find a Tender</a></p>
+    </article>
+  </div>
+</section>
+
+<section id="rossiya">
+  <h2>Почему взлетит в России</h2>
+  <div class="why">
+    <div><h3>Лидер ушёл, преемника нет</h3><p>Tork Vision Cleaning стоит в 5 из 10 крупнейших аэропортов мира, а его владелец Essity ушёл из России. Русский поиск «умного туалета» в аэропортах находит только Хитроу 2014 года.</p></div>
+    <div><h3>Технология уже прижилась, только не на транспорте</h3><p>Вейп-детекторы стоят в школах Калининграда и Петербурга. Директору вокзала датчик на потолке туалета не покажется экзотикой.</p></div>
+    <div><h3>Деньги уже разложены по статьям</h3><p>Уборку покупают регулярно лотами на 1–2 года, часто только у МСП. Доступность закупает дирекция вокзалов отдельной программой, лотов сотни.</p></div>
+    <div><h3>Давление свежее и со сроком</h3><p>Приказ № 368 вступил в силу 1 сентября 2026, соответствие вокзалов 29,5%. Представление прокурора даёт срок, которого у «аналитики» не бывает.</p></div>
+    <div><h3>У компании есть то, чего нет у программистов</h3><p>Допуск на режимные объекты, ночные окна для работ, своя бригада. Шлюз и два датчика ставятся за 30 минут, узкое место здесь доступ на объект, и он у компании есть.</p></div>
+    <div><h3>Режим экономии работает на дешёвое</h3><p>Аэропорт Воронежа потерял 639 млн ₽ за 2025, тарифы регулируются. Дорогие проекты не пройдут, а то, что экономит выходы персонала и закрывает предписания, пройти может.</p></div>
+  </div>
+  <p class="src" style="margin-top:14px"><a href="https://en.wikipedia.org/wiki/Essity">Essity</a>, <a href="https://news.mail.ru/society/63057339/">Mail.ru</a>, <a href="https://www.milesight.com/iot/success-stories/iot-green-railway-station-management">Milesight</a>, <a href="https://www.kommersant.ru/doc/8738652">Коммерсантъ</a></p>
+</section>
+
+<section id="otbrosili">
+  <h2>Что проверили и отбросили</h2>
+  <div class="tbl"><table class="killed">
+    <thead><tr><th>Гипотеза</th><th>Почему отброшена</th></tr></thead>
+    <tbody>
+      <tr><td><s>Очереди без камер</s></td><td>В Пулково уже работает российская видеоаналитика «Люр АйТи». Подрядчика досмотра наказывают за плохой досмотр, а не за очередь. Лидары дорогие: Гонолулу заплатил $6 млн за два терминала.</td></tr>
+      <tr><td><s>Телеметрия зданий вокзалов</s></td><td>У РЖД с 2018 года свой «Умный вокзал» на 35 комплексов. Экономию не доказали даже SNCF и LNER.</td></tr>
+      <tr><td><s>Парковка по местам</s></td><td>Тысячи датчиков в годы убытков аэропортов, подходящих паркингов мало, компетенция компании преимущества не даёт.</td></tr>
+      <tr><td><s>Учёт колясок</s></td><td>В мире одно-два внедрения. Приказ № 368 требует выдать коляску, а не знать, где она.</td></tr>
+      <tr><td><s>Статус лифтов</s></td><td>Постановление № 743 уже обязывает диспетчерский контроль. Сервис KONE и Otis продан вместе с людьми, окна нет.</td></tr>
+      <tr><td><s>Трансляция в слуховые аппараты</s></td><td>По сути передаёт объявления, а это закрытое оповещение.</td></tr>
+      <tr><td><s>Лидар на краю платформы</s></td><td>Мосметро ставит такую систему на все 29 станций Большой кольцевой линии к 2030.</td></tr>
+      <tr><td><s>Колонны помощи на малых станциях</s></td><td>РЖД уже удалённо управляет более чем 450 малыми вокзалами с аудиосвязью.</td></tr>
+      <tr><td><s>Птичьи радары, мусор на полосе</s></td><td>Сертификация и крупные бюджеты. В Пулково испытывали радар Ростеха.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="plan">
+  <h2>План на год и когда остановиться</h2>
+  <ol class="plan">
+    <li><span class="m">1 месяц</span><span>Дочитать пп. 23–72 приказа № 368, СП 59 и СанПиН по общественным туалетам. Скачать ТЗ лотов на уборку и посмотреть, как меряют качество. <b>Пять звонков:</b> аэропорты Мурманска и Петропавловска-Камчатского, один аэропорт «Аэропортов Регионов», начальник вокзала, клининговый подрядчик. Запросить цены у дистрибьютора Milesight и у «Веги».</span><span class="r"><b>Стоп по доступности,</b> если никто не готов платить за журнал сверх кнопки. <b>Стоп по санузлу,</b> если в ТЗ на уборку нет ни показателей, ни штрафов.</span></li>
+    <li><span class="m">2–3 месяц</span><span>Собрать платформу на сервере «Веги» или Rightech, приложение сотрудника, журнал, отчёт. Поставить доступность на один объект с представлением прокурора. На стенде проверить дрейф датчиков запаха и ложные срабатывания вейп-детектора от сушилок.</span><span class="r">Дальше, если журнал работает без ручной правки и заказчик подписал акт. Стоп по вейп-модулю при ложных срабатываниях чаще раза в сутки.</span></li>
+    <li><span class="m">3–6 месяц</span><span>Первый платный контракт по доступности: субподряд в лоте дирекции вокзалов или прямая закупка. Пилот санузла на 1–2 блоках крупного аэропорта или вокзала, 90 дней, с замером «до».</span><span class="r"><b>Стоп по доступности,</b> если к 6-му месяцу нет оплаченного объекта. Санузел продолжаем, только если за 90 дней есть измеримое изменение и заказчик готов обсуждать требование в ТЗ.</span></li>
+    <li><span class="m">6–9 месяц</span><span>Отчёт по пилоту санузла и готовая формулировка «электронный контроль уборки санузлов» для ТЗ. Доступность на 3–5 объектов. Пакет для проектировщиков новых терминалов: до 2030 строят и реконструируют 19.</span><span class="r">Стоп по санузлу, если ни заказчик, ни подрядчик не согласны на требование в ТЗ или подписку.</span></li>
+    <li><span class="m">9–12 месяц</span><span>Первый лот на уборку с нашим требованием. Региональный пакет подписки на дирекцию вокзалов. Решение о своём корпусе датчика и подаче в реестр.</span><span class="r">Продолжаем оба, если есть 5 оплаченных объектов по доступности и хотя бы одна подписка по санузлу.</span></li>
+  </ol>
+  <div class="stop">
+    <h3>Цена ошибки</h3>
+    <p>Если в первый месяц пять звонков не подтвердят готовность платить за журнал, компания теряет месяц и несколько десятков тысяч рублей на предложения поставщиков и стенд, а не год разработки.</p>
+  </div>
+</section>
+
+<section id="neizvestno">
+  <h2>Чего пока не знаем</h2>
+  <div class="prose">
+    <p>Как в контрактах на уборку вокзалов и аэропортов записаны качество, показатели и штрафы: документация лотов закрыта, от этого зависит, куда встроить санузел. Что входит в лоты дирекции вокзалов для маломобильных и можно ли зайти туда субподрядом. Что в непрочитанных пунктах 23–72 приказа № 368: там может оказаться требование вести учёт вызовов, тогда журнал станет обязательным. Реальные рублёвые цены на импортные датчики. Как ведут себя датчики запаха и вейпа в российских санузлах. Какие требования к приватности выставят юристы заказчика. Конкурентов в России искали с ограничением: в части исследования закончился лимит поиска, поэтому «не нашли» значит «не нашли», а не «нет».</p>
+    <p>И главное: готов ли хоть один директор терминала или начальник вокзала платить за журнал сверх кнопки. Этот вопрос закрывают не исследованием, а пятью звонками в первый месяц.</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <p class="files">Полный отчёт со всеми ссылками и расчётами: <a href="https://github.com/t2754445-debug/vokzal-b2g/blob/main/otchet.md">открыть отчёт</a>.</p>
+  <p>Исследование 16 октября 2026: семь исследователей, 62 мировых внедрения, 20 решений для переноса, проверка красной командой. Прошлая версия с устойчивым временем отклонена и сюда не входит.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var rows=document.getElementById('rows'),now=document.getElementById('now');
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function msk(){return new Date(Date.now()+3*3600e3);}
+  function p(n){return(n<10?'0':'')+n;}
+  function hm(d){return p(d.getUTCHours())+':'+p(d.getUTCMinutes());}
+  function tick(){var d=msk();now.textContent=hm(d)+':'+p(d.getUTCSeconds());}
+  tick();setInterval(tick,1000);
+  var EV={
+    mgn:{t:'Вызов помощи · вход 2, кнопка у пандуса',s:'Кнопка исправна, последняя проверка сегодня в 06:00',steps:['Вызов','Принят дежурным','Сотрудник на месте'],alarm:0},
+    vape:{t:'Вейп в кабине 3 · санузел М, 2 этаж',s:'Датчик без камеры и микрофона, сигнал охране',steps:['Сработал датчик','Принят охраной','Охрана на месте'],alarm:0},
+    smell:{t:'Запах выше нормы · санузел Ж, зал ожидания',s:'112 посещений с прошлой уборки, бумага 18%',steps:['Порог превышен','Принят уборщиком','Убрано'],alarm:0}
+  };
+  function add(key,offsetMin,done){
+    var e=EV[key],start=msk();start=new Date(start.getTime()-offsetMin*60000);
+    var r=document.createElement('div');r.className='row';
+    r.innerHTML='<time>'+hm(start)+'</time><div class="what"><b>'+e.t+'</b><small>'+e.s+'</small><div class="steps"></div></div>';
+    var st=r.querySelector('.steps');
+    e.steps.forEach(function(x,i){var s=document.createElement('span');s.className='step';s.textContent=x;st.appendChild(s);});
+    rows.insertBefore(r,rows.firstChild);
+    while(rows.children.length>4)rows.removeChild(rows.lastChild);
+    var spans=st.children,gaps=[0,1,3];
+    function light(i){
+      var t=new Date(start.getTime()+gaps[i]*60000);
+      spans[i].className='step '+(i===0?'alarm':'on');
+      spans[i].textContent=e.steps[i]+' '+hm(t);
+    }
+    if(done||reduce){for(var i=0;i<3;i++)light(i);return;}
+    light(0);setTimeout(function(){light(1);},1000);setTimeout(function(){light(2);},3000);
+  }
+  add('smell',42,true);add('mgn',17,true);add('vape',6,true);
+  document.querySelectorAll('.lbtn').forEach(function(b){b.onclick=function(){add(b.getAttribute('data-ev'),0,false);};});
+})();
+</script>
+</body>
+</html>
